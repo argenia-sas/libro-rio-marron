@@ -7,12 +7,10 @@ export async function generateStaticParams() {
   }));
 }
 
-interface PageProps {
-  params: {
-    id: string;
-  };
-}
-
-export default function Pagina({ params }: PageProps) {
+export default async function Pagina({
+  params,
+}: {
+  params: { id: string };
+}) {
   return <Player id={params.id} />;
 }
