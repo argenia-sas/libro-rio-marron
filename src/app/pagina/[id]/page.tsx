@@ -10,7 +10,8 @@ export async function generateStaticParams() {
 export default async function Pagina({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  return <Player id={params.id} />;
+  const { id } = await params;
+  return <Player id={id} />;
 }
