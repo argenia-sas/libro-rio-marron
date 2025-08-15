@@ -6,17 +6,22 @@ import { useEffect, useState } from "react";
 export default function Player({ id }: { id: string }) {
   const audioUrl = `/audios/${id}.mp3`;
   const [canPlay, setCanPlay] = useState(false);
-  const [audio] = useState(() => new Audio(audioUrl));
+  const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    audio.play()
+    const audioElement = new Audio(audioUrl);
+    setAudio(audioElement);
+    
+    audioElement.play()
       .then(() => setCanPlay(true))
       .catch(() => setCanPlay(false));
-  }, [audio]);
+  }, [audioUrl]);
 
   const handlePlay = () => {
-    audio.play();
-    setCanPlay(true);
+    if (audio) {
+      audio.play();
+      setCanPlay(true);
+    }
   };
 
   return (
