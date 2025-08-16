@@ -1,9 +1,12 @@
 // app/pagina/[id]/page.tsx
 import Player from "./player";
+import { BOOK_CONFIG } from "@/lib/config";
 
 export async function generateStaticParams() {
-  return Array.from({ length: 21 }, (_, i) => ({
-    id: String(i),
+  const totalPages = BOOK_CONFIG.getTotalPages();
+  // Incluimos la página 0 (secreta) y las páginas del 1 al 20
+  return Array.from({ length: totalPages }, (_, i) => ({
+    id: String(i), // Genera páginas del 0 al 20
   }));
 }
 

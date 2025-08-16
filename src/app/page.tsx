@@ -1,103 +1,137 @@
-import Image from "next/image";
+// app/page.tsx
+"use client";
+
+import Link from "next/link";
+import { useState, useEffect } from "react";
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [canPlay, setCanPlay] = useState(false);
+  const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
+  const audioUrl = "/audios/caratula.mp3";
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  useEffect(() => {
+    const audioElement = new Audio(audioUrl);
+    setAudio(audioElement);
+    
+    audioElement.play()
+      .then(() => setCanPlay(true))
+      .catch(() => setCanPlay(false));
+  }, [audioUrl]);
+
+  const handlePlay = () => {
+    if (audio) {
+      audio.play();
+      setCanPlay(true);
+    }
+  };
+
+  return (
+    <main style={{ 
+      padding: "2rem", 
+      textAlign: "center",
+      maxWidth: "800px",
+      margin: "0 auto",
+      minHeight: "100vh",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center"
+    }}>
+      {/* Título principal */}
+      <h1 style={{ 
+        fontSize: "3rem", 
+        marginBottom: "2rem",
+        color: "#2c3e50",
+        fontFamily: "serif"
+      }}>
+        El Río Marrón
+      </h1>
+
+      {/* Imagen de carátula */}
+      <div style={{ 
+        marginBottom: "2rem",
+        display: "flex",
+        justifyContent: "center"
+      }}>
+        <div style={{
+          width: "400px",
+          height: "300px",
+          backgroundColor: "#f0f0f0",
+          border: "2px solid #ddd",
+          borderRadius: "10px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontSize: "1.2rem",
+          color: "#666"
+        }}>
+          Imagen de Carátula
+          <br />
+          (coloca tu imagen en /public/images/caratula.jpg)
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+      </div>
+
+      {/* Subtítulo */}
+      <p style={{ 
+        fontSize: "1.5rem", 
+        marginBottom: "3rem",
+        color: "#7f8c8d",
+        fontStyle: "italic"
+      }}>
+        Un cuento interactivo con audio
+      </p>
+
+      {/* Control de audio de la carátula */}
+      <div style={{ marginBottom: "2rem" }}>
+        {!canPlay && (
+          <button
+            style={{
+              padding: "1rem 2rem",
+              fontSize: "1.2rem",
+              backgroundColor: "#e74c3c",
+              color: "white",
+              border: "none",
+              borderRadius: "8px",
+              cursor: "pointer",
+              marginBottom: "1rem",
+              transition: "background-color 0.3s"
+            }}
+            onClick={handlePlay}
+            onMouseEnter={(e) => (e.target as HTMLButtonElement).style.backgroundColor = "#c0392b"}
+            onMouseLeave={(e) => (e.target as HTMLButtonElement).style.backgroundColor = "#e74c3c"}
+          >
+            ▶ Reproducir audio de carátula
+          </button>
+        )}
+
+        <audio
+          src={audioUrl}
+          controls
+          style={{ width: "100%", maxWidth: "400px", marginTop: "1rem" }}
+        />
+      </div>
+
+      {/* Botón de navegación */}
+      <div style={{ marginTop: "auto", paddingTop: "2rem" }}>
+        <Link 
+          href="/pagina/1"
+          style={{
+            display: "inline-block",
+            padding: "1rem 2rem",
+            fontSize: "1.2rem",
+            backgroundColor: "#3498db",
+            color: "white",
+            textDecoration: "none",
+            borderRadius: "8px",
+            border: "none",
+            cursor: "pointer",
+            transition: "background-color 0.3s"
+          }}
+          onMouseEnter={(e) => (e.target as HTMLAnchorElement).style.backgroundColor = "#2980b9"}
+          onMouseLeave={(e) => (e.target as HTMLAnchorElement).style.backgroundColor = "#3498db"}
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+          Comenzar Lectura →
+        </Link>
+      </div>
+    </main>
   );
 }
