@@ -158,25 +158,23 @@ export default function Player({ id }: { id: string }) {
           <>
             {/* Botón anterior */}
             <div style={{ width: "150px", textAlign: "left" }}>
-              {!isFirstPage && (
-                <Link 
-                  href={prevPage}
-                  style={{
-                    display: "inline-block",
-                    padding: "0.8rem 1.5rem",
-                    fontSize: "1rem",
-                    backgroundColor: "#95a5a6",
-                    color: "white",
-                    textDecoration: "none",
-                    borderRadius: "8px",
-                    transition: "background-color 0.3s"
-                  }}
-                  onMouseEnter={(e) => (e.target as HTMLAnchorElement).style.backgroundColor = "#7f8c8d"}
-                  onMouseLeave={(e) => (e.target as HTMLAnchorElement).style.backgroundColor = "#95a5a6"}
-                >
-                  ← Anterior
-                </Link>
-              )}
+              <Link 
+                href={prevPage}
+                style={{
+                  display: "inline-block",
+                  padding: "0.8rem 1.5rem",
+                  fontSize: "1rem",
+                  backgroundColor: "#95a5a6",
+                  color: "white",
+                  textDecoration: "none",
+                  borderRadius: "8px",
+                  transition: "background-color 0.3s"
+                }}
+                onMouseEnter={(e) => (e.target as HTMLAnchorElement).style.backgroundColor = "#7f8c8d"}
+                onMouseLeave={(e) => (e.target as HTMLAnchorElement).style.backgroundColor = "#95a5a6"}
+              >
+                {isFirstPage ? "← Carátula" : "← Anterior"}
+              </Link>
             </div>
 
             {/* Indicador de página */}
