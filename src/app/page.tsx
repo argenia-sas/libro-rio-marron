@@ -2,29 +2,8 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect } from "react";
 
 export default function Home() {
-  const [canPlay, setCanPlay] = useState(false);
-  const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
-  const audioUrl = "/audios/caratula.mp3";
-
-  useEffect(() => {
-    const audioElement = new Audio(audioUrl);
-    setAudio(audioElement);
-    
-    audioElement.play()
-      .then(() => setCanPlay(true))
-      .catch(() => setCanPlay(false));
-  }, [audioUrl]);
-
-  const handlePlay = () => {
-    if (audio) {
-      audio.play();
-      setCanPlay(true);
-    }
-  };
-
   return (
     <main style={{ 
       padding: "2rem", 
@@ -79,36 +58,6 @@ export default function Home() {
       }}>
         Un cuento interactivo con audio
       </p>
-
-      {/* Control de audio de la carátula */}
-      <div style={{ marginBottom: "2rem" }}>
-        {!canPlay && (
-          <button
-            style={{
-              padding: "1rem 2rem",
-              fontSize: "1.2rem",
-              backgroundColor: "#e74c3c",
-              color: "white",
-              border: "none",
-              borderRadius: "8px",
-              cursor: "pointer",
-              marginBottom: "1rem",
-              transition: "background-color 0.3s"
-            }}
-            onClick={handlePlay}
-            onMouseEnter={(e) => (e.target as HTMLButtonElement).style.backgroundColor = "#c0392b"}
-            onMouseLeave={(e) => (e.target as HTMLButtonElement).style.backgroundColor = "#e74c3c"}
-          >
-            ▶ Reproducir audio de carátula
-          </button>
-        )}
-
-        <audio
-          src={audioUrl}
-          controls
-          style={{ width: "100%", maxWidth: "400px", marginTop: "1rem" }}
-        />
-      </div>
 
       {/* Botón de navegación */}
       <div style={{ marginTop: "auto", paddingTop: "2rem" }}>

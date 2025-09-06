@@ -3,10 +3,10 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { BOOK_CONFIG, getPageMetadata } from "@/lib/config";
+import Image from "next/image";
+import { BOOK_CONFIG, getPageMetadata, getPageAssets } from "@/lib/config";
 
 export default function Player({ id }: { id: string }) {
-  const audioUrl = `/audios/${id}.mp3`;
   const [canPlay, setCanPlay] = useState(false);
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   
@@ -14,6 +14,11 @@ export default function Player({ id }: { id: string }) {
   const totalPages = BOOK_CONFIG.getTotalPages();
   const currentPage = parseInt(id);
   const pageMetadata = getPageMetadata(currentPage);
+  const pageAssets = getPageAssets(currentPage);
+  
+  // URLs de assets
+  const audioUrl = pageAssets.audioUrl;
+  const imageUrl = pageAssets.imageUrl;
   
   // Navegación (la página 0 es secreta, no tiene navegación normal)
   const isSecretPage = currentPage === 0;
@@ -25,12 +30,14 @@ export default function Player({ id }: { id: string }) {
   const prevPage = isSecretPage ? "/" : (isFirstPage ? "/" : `/pagina/${currentPage - 1}`);
 
   useEffect(() => {
-    const audioElement = new Audio(audioUrl);
-    setAudio(audioElement);
-    
-    audioElement.play()
-      .then(() => setCanPlay(true))
-      .catch(() => setCanPlay(false));
+    if (audioUrl) {
+      const audioElement = new Audio(audioUrl);
+      setAudio(audioElement);
+      
+      audioElement.play()
+        .then(() => setCanPlay(true))
+        .catch(() => setCanPlay(false));
+    }
   }, [audioUrl]);
 
   const handlePlay = () => {
@@ -69,22 +76,38 @@ export default function Player({ id }: { id: string }) {
           display: "flex",
           justifyContent: "center"
         }}>
-          <div style={{
-            width: "400px",
-            height: "300px",
-            backgroundColor: "#f0f0f0",
-            border: "2px solid #ddd",
-            borderRadius: "10px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: "1.2rem",
-            color: "#666"
-          }}>
-            Imagen de la Página {id}
-            <br />
-            (coloca tu imagen en /public/images/pagina-{id}.jpg)
-          </div>
+          {imageUrl ? (
+            <Image 
+              src={imageUrl}
+              alt={`Imagen de la página ${id}`}
+              width={400}
+              height={300}
+              style={{
+                maxWidth: "400px",
+                maxHeight: "300px",
+                borderRadius: "10px",
+                border: "2px solid #ddd",
+                objectFit: "contain"
+              }}
+            />
+          ) : (
+            <div style={{
+              width: "400px",
+              height: "300px",
+              backgroundColor: "#f0f0f0",
+              border: "2px solid #ddd",
+              borderRadius: "10px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: "1.2rem",
+              color: "#666"
+            }}>
+              {pageAssets.hasAssets 
+                ? `Imagen no encontrada para ${pageAssets.folderName}`
+                : `Página ${id} sin assets configurados`}
+            </div>
+          )}
         </div>
 
         {/* Subtítulo */}
@@ -98,32 +121,46 @@ export default function Player({ id }: { id: string }) {
         </p>
 
         {/* Control de audio */}
-        {!canPlay && (
-          <button
-            style={{
-              padding: "1rem 2rem",
-              fontSize: "1.2rem",
-              backgroundColor: "#e74c3c",
-              color: "white",
-              border: "none",
-              borderRadius: "8px",
-              cursor: "pointer",
-              marginBottom: "1rem",
-              transition: "background-color 0.3s"
-            }}
-            onClick={handlePlay}
-            onMouseEnter={(e) => (e.target as HTMLButtonElement).style.backgroundColor = "#c0392b"}
-            onMouseLeave={(e) => (e.target as HTMLButtonElement).style.backgroundColor = "#e74c3c"}
-          >
-            ▶ Reproducir audio
-          </button>
+        {pageAssets.hasAssets && (
+          <>
+            {!canPlay && (
+              <button
+                style={{
+                  padding: "1rem 2rem",
+                  fontSize: "1.2rem",
+                  backgroundColor: "#e74c3c",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "8px",
+                  cursor: "pointer",
+                  marginBottom: "1rem",
+                  transition: "background-color 0.3s"
+                }}
+                onClick={handlePlay}
+                onMouseEnter={(e) => (e.target as HTMLButtonElement).style.backgroundColor = "#c0392b"}
+                onMouseLeave={(e) => (e.target as HTMLButtonElement).style.backgroundColor = "#e74c3c"}
+              >
+                ▶ Reproducir audio
+              </button>
+            )}
+
+            <audio
+              src={audioUrl || undefined}
+              controls
+              style={{ width: "100%", maxWidth: "400px", marginTop: "1rem" }}
+            />
+          </>
         )}
 
-        <audio
-          src={audioUrl}
-          controls
-          style={{ width: "100%", maxWidth: "400px", marginTop: "1rem" }}
-        />
+        {!pageAssets.hasAssets && (
+          <p style={{ 
+            fontSize: "1rem", 
+            color: "#999",
+            fontStyle: "italic"
+          }}>
+            No hay audio disponible para esta página
+          </p>
+        )}
       </div>
 
       {/* Navegación */}
