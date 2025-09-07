@@ -39,7 +39,6 @@ export function getPageMetadata(id: number) {
   
   return {
     title: title,
-    subtitle: `Contenido de la página ${id} del libro`,
     isHome: false,
     isSecret: false
   };

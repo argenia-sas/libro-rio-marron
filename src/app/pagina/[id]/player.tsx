@@ -110,16 +110,6 @@ export default function Player({ id }: { id: string }) {
           )}
         </div>
 
-        {/* Subtítulo */}
-        <p style={{ 
-          fontSize: "1.3rem", 
-          marginBottom: "2rem",
-          color: "#7f8c8d",
-          fontStyle: "italic"
-        }}>
-          {pageMetadata.subtitle}
-        </p>
-
         {/* Control de audio */}
         {pageAssets.hasAssets && (
           <>
