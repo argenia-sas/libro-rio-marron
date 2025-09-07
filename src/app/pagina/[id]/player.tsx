@@ -50,9 +50,9 @@ export default function Player({ id }: { id: string }) {
 
   return (
     <main style={{ 
-      padding: "2rem", 
+      padding: "1rem", 
       textAlign: "center",
-      maxWidth: "800px",
+      maxWidth: "100%",
       margin: "0 auto",
       minHeight: "100vh",
       display: "flex",
@@ -63,19 +63,22 @@ export default function Player({ id }: { id: string }) {
       <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center" }}>
         {/* Título de la página */}
         <h1 style={{ 
-          fontSize: "2.5rem", 
-          marginBottom: "2rem",
+          fontSize: "clamp(1.5rem, 5vw, 2.5rem)", 
+          marginBottom: "1.5rem",
           color: "#2c3e50",
-          fontFamily: "serif"
+          fontFamily: "serif",
+          padding: "0 0.5rem",
+          lineHeight: "1.2"
         }}>
           {pageMetadata.title}
         </h1>
 
         {/* Imagen de la página */}
         <div style={{ 
-          marginBottom: "2rem",
+          marginBottom: "1.5rem",
           display: "flex",
-          justifyContent: "center"
+          justifyContent: "center",
+          padding: "0 1rem"
         }}>
           {imageUrl ? (
             <Image 
@@ -84,8 +87,9 @@ export default function Player({ id }: { id: string }) {
               width={400}
               height={300}
               style={{
+                width: "100%",
                 maxWidth: "400px",
-                maxHeight: "300px",
+                height: "auto",
                 borderRadius: "10px",
                 border: "2px solid #ddd",
                 objectFit: "contain"
@@ -93,16 +97,19 @@ export default function Player({ id }: { id: string }) {
             />
           ) : (
             <div style={{
-              width: "400px",
-              height: "300px",
+              width: "100%",
+              maxWidth: "400px",
+              height: "250px",
               backgroundColor: "#f0f0f0",
               border: "2px solid #ddd",
               borderRadius: "10px",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              fontSize: "1.2rem",
-              color: "#666"
+              fontSize: "clamp(0.9rem, 3vw, 1.2rem)",
+              color: "#666",
+              padding: "1rem",
+              textAlign: "center"
             }}>
               {pageAssets.hasAssets 
                 ? `Imagen no encontrada para ${pageAssets.folderName}`
@@ -116,21 +123,21 @@ export default function Player({ id }: { id: string }) {
           <>
             <button
               style={{
-                padding: "1.5rem",
-                fontSize: "3rem",
+                padding: "clamp(1rem, 3vw, 1.5rem)",
+                fontSize: "clamp(2rem, 6vw, 3rem)",
                 backgroundColor: "#e74c3c",
                 color: "white",
                 border: "none",
                 borderRadius: "50%",
                 cursor: "pointer",
-                marginBottom: "2rem",
+                marginBottom: "1.5rem",
                 transition: "all 0.3s",
-                width: "100px",
-                height: "100px",
+                width: "clamp(70px, 15vw, 100px)",
+                height: "clamp(70px, 15vw, 100px)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                margin: "0 auto 2rem auto",
+                margin: "0 auto 1.5rem auto",
                 boxShadow: "0 4px 8px rgba(0,0,0,0.2)"
               }}
               onClick={handlePlay}
@@ -156,9 +163,11 @@ export default function Player({ id }: { id: string }) {
 
         {!pageAssets.hasAssets && (
           <p style={{ 
-            fontSize: "1rem", 
+            fontSize: "clamp(0.9rem, 2.5vw, 1rem)", 
             color: "#999",
-            fontStyle: "italic"
+            fontStyle: "italic",
+            padding: "0 1rem",
+            textAlign: "center"
           }}>
             No hay audio disponible para esta página
           </p>
@@ -170,9 +179,11 @@ export default function Player({ id }: { id: string }) {
         display: "flex", 
         justifyContent: isSecretPage ? "center" : "space-between", 
         alignItems: "center",
-        marginTop: "2rem",
-        paddingTop: "2rem",
-        borderTop: "1px solid #eee"
+        marginTop: "1.5rem",
+        paddingTop: "1.5rem",
+        borderTop: "1px solid #eee",
+        flexWrap: "wrap",
+        gap: "1rem"
       }}>
         {/* Página secreta: solo botón de volver al inicio */}
         {isSecretPage ? (
@@ -180,13 +191,15 @@ export default function Player({ id }: { id: string }) {
             href="/"
             style={{
               display: "inline-block",
-              padding: "0.8rem 1.5rem",
-              fontSize: "1rem",
+              padding: "clamp(0.6rem, 2vw, 0.8rem) clamp(1rem, 3vw, 1.5rem)",
+              fontSize: "clamp(0.9rem, 2.5vw, 1rem)",
               backgroundColor: "#e74c3c",
               color: "white",
               textDecoration: "none",
               borderRadius: "8px",
-              transition: "background-color 0.3s"
+              transition: "background-color 0.3s",
+              minWidth: "120px",
+              textAlign: "center"
             }}
             onMouseEnter={(e) => (e.target as HTMLAnchorElement).style.backgroundColor = "#c0392b"}
             onMouseLeave={(e) => (e.target as HTMLAnchorElement).style.backgroundColor = "#e74c3c"}
@@ -196,18 +209,21 @@ export default function Player({ id }: { id: string }) {
         ) : (
           <>
             {/* Botón anterior */}
-            <div style={{ width: "150px", textAlign: "left" }}>
+            <div style={{ flex: "1", textAlign: "left", minWidth: "120px" }}>
               <Link 
                 href={prevPage}
                 style={{
                   display: "inline-block",
-                  padding: "0.8rem 1.5rem",
-                  fontSize: "1rem",
+                  padding: "clamp(0.6rem, 2vw, 0.8rem) clamp(1rem, 3vw, 1.5rem)",
+                  fontSize: "clamp(0.8rem, 2.2vw, 1rem)",
                   backgroundColor: "#95a5a6",
                   color: "white",
                   textDecoration: "none",
                   borderRadius: "8px",
-                  transition: "background-color 0.3s"
+                  transition: "background-color 0.3s",
+                  width: "100%",
+                  textAlign: "center",
+                  boxSizing: "border-box"
                 }}
                 onMouseEnter={(e) => (e.target as HTMLAnchorElement).style.backgroundColor = "#7f8c8d"}
                 onMouseLeave={(e) => (e.target as HTMLAnchorElement).style.backgroundColor = "#95a5a6"}
@@ -218,26 +234,31 @@ export default function Player({ id }: { id: string }) {
 
             {/* Indicador de página */}
             <div style={{ 
-              fontSize: "1rem", 
+              fontSize: "clamp(0.8rem, 2.2vw, 1rem)", 
               color: "#7f8c8d",
-              fontWeight: "bold"
+              fontWeight: "bold",
+              minWidth: "60px",
+              textAlign: "center"
             }}>
               {currentPage} / {totalPages - 1}
             </div>
 
             {/* Botón siguiente */}
-            <div style={{ width: "150px", textAlign: "right" }}>
+            <div style={{ flex: "1", textAlign: "right", minWidth: "120px" }}>
               <Link 
                 href={nextPage}
                 style={{
                   display: "inline-block",
-                  padding: "0.8rem 1.5rem",
-                  fontSize: "1rem",
+                  padding: "clamp(0.6rem, 2vw, 0.8rem) clamp(1rem, 3vw, 1.5rem)",
+                  fontSize: "clamp(0.8rem, 2.2vw, 1rem)",
                   backgroundColor: "#3498db",
                   color: "white",
                   textDecoration: "none",
                   borderRadius: "8px",
-                  transition: "background-color 0.3s"
+                  transition: "background-color 0.3s",
+                  width: "100%",
+                  textAlign: "center",
+                  boxSizing: "border-box"
                 }}
                 onMouseEnter={(e) => (e.target as HTMLAnchorElement).style.backgroundColor = "#2980b9"}
                 onMouseLeave={(e) => (e.target as HTMLAnchorElement).style.backgroundColor = "#3498db"}
