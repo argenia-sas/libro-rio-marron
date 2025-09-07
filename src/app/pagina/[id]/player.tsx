@@ -32,6 +32,13 @@ export default function Player({ id }: { id: string }) {
     if (audioUrl) {
       const audioElement = new Audio(audioUrl);
       setAudio(audioElement);
+      
+      // Reproducir automáticamente cuando se carga la página
+      audioElement.play().catch((error) => {
+        // Si falla la reproducción automática (políticas del navegador),
+        // el usuario puede usar el botón manual
+        console.log("Reproducción automática bloqueada:", error);
+      });
     }
   }, [audioUrl]);
 
