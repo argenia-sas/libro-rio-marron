@@ -7,7 +7,6 @@ import Image from "next/image";
 import { BOOK_CONFIG, getPageMetadata, getPageAssets } from "@/lib/config";
 
 export default function Player({ id }: { id: string }) {
-  const [canPlay, setCanPlay] = useState(false);
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   
   // Configuración del libro
@@ -33,17 +32,12 @@ export default function Player({ id }: { id: string }) {
     if (audioUrl) {
       const audioElement = new Audio(audioUrl);
       setAudio(audioElement);
-      
-      audioElement.play()
-        .then(() => setCanPlay(true))
-        .catch(() => setCanPlay(false));
     }
   }, [audioUrl]);
 
   const handlePlay = () => {
     if (audio) {
       audio.play();
-      setCanPlay(true);
     }
   };
 
@@ -113,31 +107,42 @@ export default function Player({ id }: { id: string }) {
         {/* Control de audio */}
         {pageAssets.hasAssets && (
           <>
-            {!canPlay && (
-              <button
-                style={{
-                  padding: "1rem 2rem",
-                  fontSize: "1.2rem",
-                  backgroundColor: "#e74c3c",
-                  color: "white",
-                  border: "none",
-                  borderRadius: "8px",
-                  cursor: "pointer",
-                  marginBottom: "1rem",
-                  transition: "background-color 0.3s"
-                }}
-                onClick={handlePlay}
-                onMouseEnter={(e) => (e.target as HTMLButtonElement).style.backgroundColor = "#c0392b"}
-                onMouseLeave={(e) => (e.target as HTMLButtonElement).style.backgroundColor = "#e74c3c"}
-              >
-                ▶ Reproducir audio
-              </button>
-            )}
+            <button
+              style={{
+                padding: "1.5rem",
+                fontSize: "3rem",
+                backgroundColor: "#e74c3c",
+                color: "white",
+                border: "none",
+                borderRadius: "50%",
+                cursor: "pointer",
+                marginBottom: "2rem",
+                transition: "all 0.3s",
+                width: "100px",
+                height: "100px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                margin: "0 auto 2rem auto",
+                boxShadow: "0 4px 8px rgba(0,0,0,0.2)"
+              }}
+              onClick={handlePlay}
+              onMouseEnter={(e) => {
+                (e.target as HTMLButtonElement).style.backgroundColor = "#c0392b";
+                (e.target as HTMLButtonElement).style.transform = "scale(1.1)";
+              }}
+              onMouseLeave={(e) => {
+                (e.target as HTMLButtonElement).style.backgroundColor = "#e74c3c";
+                (e.target as HTMLButtonElement).style.transform = "scale(1)";
+              }}
+              title="Escuchar audio"
+            >
+              🔊
+            </button>
 
             <audio
               src={audioUrl || undefined}
-              controls
-              style={{ width: "100%", maxWidth: "400px", marginTop: "1rem" }}
+              style={{ display: "none" }}
             />
           </>
         )}
