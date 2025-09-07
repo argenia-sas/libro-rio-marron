@@ -26,8 +26,19 @@ export function getPageMetadata(id: number) {
     return BOOK_CONFIG.pages[0];
   }
   
+  // Obtener el título desde el nombre de la carpeta de assets
+  const folder = getPageAssetFolder(id);
+  let title = `Página ${id}`;
+  
+  if (folder) {
+    // Extraer el nombre después del número y guión, reemplazar guiones con espacios
+    const name = folder.split('-').slice(1).join(' ');
+    // Capitalizar la primera letra
+    title = name.charAt(0).toUpperCase() + name.slice(1);
+  }
+  
   return {
-    title: `Página ${id}`,
+    title: title,
     subtitle: `Contenido de la página ${id} del libro`,
     isHome: false,
     isSecret: false
