@@ -54,13 +54,14 @@ export default function Player({ id }: { id: string }) {
       textAlign: "center",
       maxWidth: "100%",
       margin: "0 auto",
-      minHeight: "100vh",
+      height: "100vh",
       display: "flex",
       flexDirection: "column",
-      justifyContent: "space-between"
+      justifyContent: "space-between",
+      overflow: "hidden"
     }}>
       {/* Contenido principal */}
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center" }}>
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "flex-start", minHeight: 0 }}>
         {/* Título de la página */}
         <h1 style={{ 
           fontSize: "clamp(1.5rem, 5vw, 2.5rem)", 
@@ -78,7 +79,11 @@ export default function Player({ id }: { id: string }) {
           marginBottom: "1.5rem",
           display: "flex",
           justifyContent: "center",
-          padding: "0 1rem"
+          padding: "0 1rem",
+          flex: "1",
+          alignItems: "center",
+          maxHeight: "50vh",
+          overflow: "hidden"
         }}>
           {imageUrl ? (
             <Image 
@@ -87,9 +92,10 @@ export default function Player({ id }: { id: string }) {
               width={400}
               height={300}
               style={{
-                width: "100%",
-                maxWidth: "400px",
+                width: "auto",
                 height: "auto",
+                maxWidth: "100%",
+                maxHeight: "100%",
                 borderRadius: "10px",
                 border: "2px solid #ddd",
                 objectFit: "contain"
@@ -182,8 +188,7 @@ export default function Player({ id }: { id: string }) {
         marginTop: "1.5rem",
         paddingTop: "1.5rem",
         borderTop: "1px solid #eee",
-        flexWrap: "wrap",
-        gap: "1rem"
+        gap: "0.5rem"
       }}>
         {/* Página secreta: solo botón de volver al inicio */}
         {isSecretPage ? (
@@ -209,13 +214,13 @@ export default function Player({ id }: { id: string }) {
         ) : (
           <>
             {/* Botón anterior */}
-            <div style={{ flex: "1", textAlign: "left", minWidth: "120px" }}>
+            <div style={{ flex: "0 0 auto", minWidth: "100px", maxWidth: "120px" }}>
               <Link 
                 href={prevPage}
                 style={{
                   display: "inline-block",
-                  padding: "clamp(0.6rem, 2vw, 0.8rem) clamp(1rem, 3vw, 1.5rem)",
-                  fontSize: "clamp(0.8rem, 2.2vw, 1rem)",
+                  padding: "clamp(0.5rem, 1.5vw, 0.7rem) clamp(0.7rem, 2vw, 1rem)",
+                  fontSize: "clamp(0.7rem, 2vw, 0.9rem)",
                   backgroundColor: "#95a5a6",
                   color: "white",
                   textDecoration: "none",
@@ -223,7 +228,10 @@ export default function Player({ id }: { id: string }) {
                   transition: "background-color 0.3s",
                   width: "100%",
                   textAlign: "center",
-                  boxSizing: "border-box"
+                  boxSizing: "border-box",
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis"
                 }}
                 onMouseEnter={(e) => (e.target as HTMLAnchorElement).style.backgroundColor = "#7f8c8d"}
                 onMouseLeave={(e) => (e.target as HTMLAnchorElement).style.backgroundColor = "#95a5a6"}
@@ -234,23 +242,24 @@ export default function Player({ id }: { id: string }) {
 
             {/* Indicador de página */}
             <div style={{ 
-              fontSize: "clamp(0.8rem, 2.2vw, 1rem)", 
+              fontSize: "clamp(0.7rem, 2vw, 0.9rem)", 
               color: "#7f8c8d",
               fontWeight: "bold",
-              minWidth: "60px",
-              textAlign: "center"
+              flex: "1",
+              textAlign: "center",
+              minWidth: "50px"
             }}>
               {currentPage} / {totalPages - 1}
             </div>
 
             {/* Botón siguiente */}
-            <div style={{ flex: "1", textAlign: "right", minWidth: "120px" }}>
+            <div style={{ flex: "0 0 auto", minWidth: "100px", maxWidth: "120px" }}>
               <Link 
                 href={nextPage}
                 style={{
                   display: "inline-block",
-                  padding: "clamp(0.6rem, 2vw, 0.8rem) clamp(1rem, 3vw, 1.5rem)",
-                  fontSize: "clamp(0.8rem, 2.2vw, 1rem)",
+                  padding: "clamp(0.5rem, 1.5vw, 0.7rem) clamp(0.7rem, 2vw, 1rem)",
+                  fontSize: "clamp(0.7rem, 2vw, 0.9rem)",
                   backgroundColor: "#3498db",
                   color: "white",
                   textDecoration: "none",
@@ -258,7 +267,10 @@ export default function Player({ id }: { id: string }) {
                   transition: "background-color 0.3s",
                   width: "100%",
                   textAlign: "center",
-                  boxSizing: "border-box"
+                  boxSizing: "border-box",
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis"
                 }}
                 onMouseEnter={(e) => (e.target as HTMLAnchorElement).style.backgroundColor = "#2980b9"}
                 onMouseLeave={(e) => (e.target as HTMLAnchorElement).style.backgroundColor = "#3498db"}
