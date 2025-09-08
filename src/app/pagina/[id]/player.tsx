@@ -25,8 +25,8 @@ export default function Player({ id }: { id: string }) {
   const isLastPage = currentPage === totalPages - 1;
   
   // Para la página secreta, solo puede ir al inicio
-  const nextPage = isSecretPage ? "/" : (isLastPage ? "/" : `/pagina/${currentPage + 1}`);
-  const prevPage = isSecretPage ? "/" : (isFirstPage ? "/" : `/pagina/${currentPage - 1}`);
+  const nextPage = isSecretPage ? "/" : (isLastPage ? "/pagina/1" : `/pagina/${currentPage + 1}`);
+  const prevPage = isSecretPage ? "/" : (isFirstPage ? `/pagina/${totalPages - 1}` : `/pagina/${currentPage - 1}`);
 
   useEffect(() => {
     if (audioUrl) {
@@ -228,7 +228,7 @@ export default function Player({ id }: { id: string }) {
                 onMouseEnter={(e) => (e.target as HTMLAnchorElement).style.backgroundColor = "#7f8c8d"}
                 onMouseLeave={(e) => (e.target as HTMLAnchorElement).style.backgroundColor = "#95a5a6"}
               >
-                {isFirstPage ? "← Carátula" : "← Anterior"}
+                {isFirstPage ? "← Última" : "← Anterior"}
               </Link>
             </div>
 
@@ -263,7 +263,7 @@ export default function Player({ id }: { id: string }) {
                 onMouseEnter={(e) => (e.target as HTMLAnchorElement).style.backgroundColor = "#2980b9"}
                 onMouseLeave={(e) => (e.target as HTMLAnchorElement).style.backgroundColor = "#3498db"}
               >
-                {isLastPage ? "← Inicio" : "Siguiente →"}
+                {isLastPage ? "Primera →" : "Siguiente →"}
               </Link>
             </div>
           </>
