@@ -180,8 +180,7 @@ export default function Player({ id }: { id: string }) {
         )}
       </div>
 
-      {/* Navegación */}
-      <div style={{ 
+      {/* <div style={{ 
         display: "flex", 
         justifyContent: isSecretPage ? "center" : "space-between", 
         alignItems: "center",
@@ -190,7 +189,6 @@ export default function Player({ id }: { id: string }) {
         borderTop: "1px solid #eee",
         gap: "0.5rem"
       }}>
-        {/* Página secreta: solo botón de volver al inicio */}
         {isSecretPage ? (
           <Link 
             href="/"
@@ -213,7 +211,6 @@ export default function Player({ id }: { id: string }) {
           </Link>
         ) : (
           <>
-            {/* Botón anterior */}
             <div style={{ flex: "0 0 auto", minWidth: "100px", maxWidth: "120px" }}>
               <Link 
                 href={prevPage}
@@ -240,7 +237,6 @@ export default function Player({ id }: { id: string }) {
               </Link>
             </div>
 
-            {/* Indicador de página */}
             <div style={{ 
               fontSize: "clamp(0.7rem, 2vw, 0.9rem)", 
               color: "#7f8c8d",
@@ -252,7 +248,6 @@ export default function Player({ id }: { id: string }) {
               {currentPage} / {totalPages - 1}
             </div>
 
-            {/* Botón siguiente */}
             <div style={{ flex: "0 0 auto", minWidth: "100px", maxWidth: "120px" }}>
               <Link 
                 href={nextPage}
@@ -280,7 +275,7 @@ export default function Player({ id }: { id: string }) {
             </div>
           </>
         )}
-      </div>
+      </div> */}
     </main>
   );
 }
