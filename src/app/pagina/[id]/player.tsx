@@ -54,7 +54,7 @@ export default function Player({ id }: { id: string }) {
       textAlign: "center",
       maxWidth: "100%",
       margin: "0 auto",
-      height: "100vh",
+      height: "90vh",
       display: "flex",
       flexDirection: "column",
       justifyContent: "space-between",
@@ -82,7 +82,7 @@ export default function Player({ id }: { id: string }) {
           padding: "0 1rem",
           flex: "1",
           alignItems: "center",
-          maxHeight: "50vh",
+          height: "50vh",
           overflow: "hidden"
         }}>
           {imageUrl ? (
